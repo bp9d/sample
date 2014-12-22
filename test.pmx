@@ -9,6 +9,8 @@ images:
   source: redis:latest
   category: DB
   type: Default
+  expose:
+  - '6379'
 - name: uchiwa_uchiwa
   source: uchiwa/uchiwa:latest
   category: GUI
