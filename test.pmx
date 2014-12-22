@@ -1,0 +1,47 @@
+---
+name: test
+description: test
+keywords: ''
+type: Default
+documentation: ''
+images:
+- name: redis_latest
+  source: redis:latest
+  category: DB
+  type: Default
+- name: uchiwa_uchiwa
+  source: uchiwa/uchiwa:latest
+  category: GUI
+  type: Default
+  expose:
+  - '3000'
+  ports:
+  - host_port: '8080'
+    container_port: '3000'
+    proto: TCP
+  links:
+  - service: virtualswede_docker-sensu
+    alias: sensu
+  environment:
+  - variable: API1_PORT_4567_TCP_PORT
+    value: '4567'
+  - variable: API1_PORT_4567_TCP_ADDR
+    value: sensu
+- name: virtualswede_docker-sensu
+  source: virtualswede/docker-sensu:latest
+  category: Sensu
+  type: Default
+  expose:
+  - '4567'
+  links:
+  - service: redis_latest
+    alias: redis
+  - service: virtualswede_tutum-docker-rabbitmq
+    alias: rabbitmq
+- name: virtualswede_tutum-docker-rabbitmq
+  source: virtualswede/tutum-docker-rabbitmq:latest
+  category: Message Queue
+  type: Default
+  expose:
+  - '5672'
+  - '15672'
