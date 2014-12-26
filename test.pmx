@@ -1,6 +1,6 @@
 ---
-name: test
-description: test
+name: Test
+description: ''
 keywords: ''
 type: Default
 documentation: ''
@@ -15,10 +15,8 @@ images:
   source: uchiwa/uchiwa:latest
   category: GUI
   type: Default
-  expose:
-  - '3000'
   ports:
-  - host_port: '8080'
+  - host_port: '8081'
     container_port: '3000'
     proto: TCP
   links:
@@ -29,6 +27,9 @@ images:
     value: '4567'
   - variable: API1_PORT_4567_TCP_ADDR
     value: sensu
+  volumes:
+  - host_path: "/home/core/uchiwa/config"
+    container_path: "/config "
 - name: virtualswede_docker-sensu
   source: virtualswede/docker-sensu:latest
   category: Sensu
